@@ -16,5 +16,5 @@ $ npm install
 $ npm start
 ```
 
-and visit [](http://localhost:300)
+and visit http://localhost:3000
 
