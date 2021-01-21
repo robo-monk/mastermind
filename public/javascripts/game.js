@@ -13,9 +13,7 @@ function matchmake(){
   send('matchmake')
 }
 
-let gamer = {
-
-}
+let gamer = {}
 
 const handlers = {
   
@@ -52,7 +50,7 @@ const handlers = {
     if (msg === 'code has been set'){
       console.log('we have a game ladies')
       board.showRows(board.playableRows)
-      board.newTurn()
+      if (gamer.role == 'mind') board.newTurn()
     }
 
     if (msg['attempt'] && msg['eval']){

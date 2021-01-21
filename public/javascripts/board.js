@@ -43,7 +43,7 @@ const colors = [
     '#FF4136',
     '#FFDC00',
     '#2ECC40',
-    '#F012BE',
+    '#FFFFFF',
     '#FF851B'
   ]
 
@@ -108,13 +108,12 @@ class ObjectifiedElementWithMap extends ObjectifiedElement{
 }
 
 class Row extends ObjectifiedElementWithMap {
-  constructor(className='row', pins=4){
+  constructor(className='row', pins=4, pinClass){
     super('pin', className)
-    this.element.classList.add('row')
     // creates this.addPin, this.pins, this.export
 
     for (let i=0; i<pins; i+=1){
-      this.addPin(new Pin(this))
+      this.addPin(new Pin(this, pinClass))
     }
   }
 
@@ -144,11 +143,14 @@ class Row extends ObjectifiedElementWithMap {
   }
 
   setTo(pins){
-    console.log(pins)
+    for (let [key, pin] of this.pins){
+      console.log(key, pin)
+      console.log(pins)
+      pin.color = pins[key]
+    }
   }
 }
 
-// TODO make this a class
 class Board extends ObjectifiedElementWithMap {
   constructor(rows=10, className='board'){
     super('row', className)
@@ -157,11 +159,15 @@ class Board extends ObjectifiedElementWithMap {
     for (let i=0; i<rows; i+=1){
       let row = new Row
       this.prependRow(row)
-      row.evaluation = new Row('eval-row')
+      row.evaluation = new Row('eval-row', 4, 'eval-pin')
+      row.evaluation.appendTo(row.element)
     }
 
     this.turn = 0
-    this.prependRow(new Row('code-row'), 'code')
+    
+    let codeRow = new Row('code-row')
+    codeRow.element.classList.add('row')
+    this.prependRow(codeRow, 'code')
 
     // append self to document body
     this.appendTo(document.body)
@@ -195,17 +201,34 @@ class Board extends ObjectifiedElementWithMap {
   newTurn(){
     if (gamer.role != 'mind'){
       console.log('new turn for the mind')
-      return
+    }else{
+      this.currentRow.activate()
     }
 
-    this.currentRow.activate()
     this.turn += 1
   }
 
   setPins(evaluation, at){
     this.currentRow.setTo(at)
-    this.currentRow.evaluation.setTo(evaluation)
+    this.currentRow.evaluation.setTo(parseEv(evaluation))
   }
+}
+
+function parseEv(ev){
+  let obj = {}
+  for (let i=0; i<4; i++){
+    let setTo = -1
+    if (ev.red > 0){
+      setTo = 1
+      ev.red -=1
+    }else if (ev.white > 0){
+      setTo = 4
+      ev.white -=1
+    }
+
+    obj[i] = setTo
+  }
+  return obj
 }
 
 // let board = new Board

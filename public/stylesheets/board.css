@@ -15,7 +15,7 @@
 .row {
   display: grid;
   width: fit-content;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 	grid-column-gap: 10px;
 }
 
@@ -24,5 +24,23 @@
   width: 45px;
   border-radius: 100px;
   cursor: pointer;
+  background-color: whitesmoke;
+}
+
+.eval-row{
+  width: fit-content;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+	grid-column-gap: 5px;
+  grid-row-gap: 5px;
+  margin: auto;
+  margin-left: 15px;
+}
+
+.eval-pin {
+  height: 15px;
+  width: 15px;
+  border-radius: 100px;
   background-color: whitesmoke;
 }
