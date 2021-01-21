@@ -3,4 +3,11 @@ function uniqID(){
             Math.random().toString(32).substr(4,8)
 }
 
-module.exports = { uniqID }
+function evalAttempt(og, attempt){
+  return {
+    red: 1,
+    white: 0
+  }
+}
+
+module.exports = { uniqID, evalAttempt }

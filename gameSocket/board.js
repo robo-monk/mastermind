@@ -1,3 +1,5 @@
+var util = require("./util")
+
 function sendJAndPromise(socket, msg, accepted){
     console.log('sending')
     socket.sendJ(msg)
@@ -33,9 +35,9 @@ class Board {
     return sendJAndPromise(this.game[recipient], { board: msg }, expected)
   }
 
-  evalAttempt(){
+  evalAttempt(attempt){
+    util.evalAttempt(this.code, attempt)
   }
-
   newAttempt(code){
   }
 }
