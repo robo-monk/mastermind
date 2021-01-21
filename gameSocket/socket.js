@@ -72,6 +72,7 @@ function create(server){
   wss.on("connection", function (ws) {
 
       ws.id = util.uniqID(10)
+
       ws.sendJ = function(j) { this.send(JSON.stringify(j || 'hi')) }
 
       ws.on("message", handleMsg)

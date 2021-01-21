@@ -3,7 +3,9 @@ const map = {
     available: "#available-players",
     play: '#play',
     playArea: '#new-game',
-    info: "#info"
+    info: "#info",
+    codeArea: "#code-area",
+    codeText: "#code-text"
 }
 
 function _e(query){
@@ -32,4 +34,17 @@ function updateInfo(msg){
 _e(map.play).onclick = function(){
   matchmake()
   this.html('Looking for match')
+}
+
+
+function getNewCode(){
+  _e(map.codeArea).classList.remove("hidden")
+  return new Promise(resolve => {
+      window.addEventListener('keypress', e => {
+        if (e.key === 'Enter'){
+          _e(map.codeArea).classList.add("hidden")
+          resolve(_e(map.codeText).value) 
+        }
+      })
+  })
 }

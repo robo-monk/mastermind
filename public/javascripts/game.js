@@ -35,21 +35,35 @@ function matchmake(){
   send('matchmake')
 }
 
-function handleGameMsg(msg){
-    console.log(msg)
-    if (msg === 'Gamers get ready'){
-      state = states.startingGame
-      uiStartGame()
-    }
-    if (msg === 'yeeted game'){
+const handlers = {
+  game: function(msg){
+      console.log(msg)
 
-      editPlayArea("<h1> Terribly sorry! It seems your opponent has been disconnected. </h1>")
-      setTimeout(_ => {
-        location.reload()
-      }, 1800)
-    }
-}
+      if (msg === 'Gamers get ready'){
+        state = states.startingGame
+        return uiStartGame()
+      }
 
-function handleInfoMsg(msg){
-  updateInfo(msg)
+      if (msg === 'yeeted game'){
+        editPlayArea("<h1> Terribly sorry! It seems your opponent has been disconnected. </h1>")
+        setTimeout(_ => {
+          location.reload()
+        }, 1800)
+        return
+      }
+
+
+  },
+
+  board: function(msg){
+    if (msg === 'enter code'){
+        return getNewCode().then(code => {
+          send({code: code})
+        })
+    }
+  },
+
+  info: function(msg){
+    updateInfo(msg)
+  }
 }

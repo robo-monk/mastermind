@@ -1,3 +1,4 @@
+var board = require("./board.js")
 
 class Games {
     constructor(){
@@ -35,12 +36,15 @@ class Game {
   start(){
     console.log("STARTING GAME")
     this.send2Gamers("Gamers get ready")
+
     let mindIndex = Math.round(Math.random())
     this.mind = this.gamers[mindIndex]
     this.coder = this.gamers[Math.abs(mindIndex-1)]
 
     this.mind.sendJ({info:"You've been assigned to be the mind"})
     this.coder.sendJ({info:"You're the coder"})
+
+    this.board = board.create(this)
   }
 
   close(){
@@ -65,6 +69,7 @@ class Game {
 let games = new Games()
 
 function newMatchmaker(gamer){
+  // gamer is of type WebSocket
 
   console.log("MATCHMAKING", gamer.id)
   let openGames = games.open

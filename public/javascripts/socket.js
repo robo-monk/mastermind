@@ -13,12 +13,14 @@ function openSocket(){
   send()
 }
 
+const acceptedMsgTypes = [ 'game', 'board', 'info' ]
 function handleMsg(msg){
   let data = JSON.parse(msg.data || "")
   console.log(`>> NEW MSG ==> ${JSON.stringify(data)}`)
 
   if (data['active']) updateActivePlayers(data['active'])
 
-  if (data['game']) handleGameMsg(data['game'])
-  if (data['info']) handleInfoMsg(data['info'])
+  for (let type of acceptedMsgTypes){
+    if (data[type]) return handlers[type](data[type])
+  }
 }

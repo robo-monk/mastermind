@@ -7,6 +7,7 @@ var app = express();
 
 app.use(express.static(__dirname + "/public"));
 
+// ROUTES
 app.get('/', function(req, res, next) {
   console.log('visited /root')
   res.sendFile("splash.html", {root: "./public"})
