@@ -44,6 +44,9 @@ class Game {
     this.mind.sendJ({info:"You've been assigned to be the mind"})
     this.coder.sendJ({info:"You're the coder"})
 
+    this.coder.sendJ({assignRole:"coder"})
+    this.mind.sendJ({assignRole:"mind"})
+
     this.board = board.create(this)
   }
 

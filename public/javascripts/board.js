@@ -1,6 +1,7 @@
 class ObjectifiedElement {
-  constructor(className, tag='div'){
+  constructor(className, parent, tag='div'){
     this.element = document.createElement('div')
+    this.parent = parent
     if (className) this.element.classList.add(className)
   }
 
@@ -33,10 +34,15 @@ const colors = [
   ]
 
 class Pin extends ObjectifiedElement {
-  constructor(className='pin'){
-    super(className)
-    this.element.addEventListener('click', _ => this.click() )
+  constructor(parent, clickable=true, className='pin'){
+    super(className, parent)
+    if (clickable) this.element.addEventListener('click', _ => this.click() )
     this.color = 0
+  }
+
+  get active(){
+    if (this.parent) return this.parent.active
+    return this._active
   }
 
   set color(n){
@@ -51,7 +57,7 @@ class Pin extends ObjectifiedElement {
   }
 
   click(){
-    this.color+=1
+    if (this.active) this.color+=1
   }
 
   export(){
@@ -88,14 +94,21 @@ class ObjectifiedElementWithMap extends ObjectifiedElement{
 }
 
 class Row extends ObjectifiedElementWithMap {
-  constructor(className='row', pins=4 ){
+  constructor(className='row', edible=true, pins=4 ){
     super('pin', className)
     this.element.classList.add('row')
     // creates this.addPin, this.pins, this.export
 
     for (let i=0; i<pins; i+=1){
-      this.addPin(new Pin)
+      this.addPin(new Pin(this))
     }
+  }
+  
+  inactivate(){
+    this.active = false
+  }
+  activate(){
+    this.active = true
   }
 }
 
@@ -110,14 +123,35 @@ class Board extends ObjectifiedElementWithMap {
     }
 
     this.prependRow(new Row('code-row'), 'code')
+
+    this.appendTo(document.body)
+  }
+
+  get playableRows(){
+    return Array.from(this.rows.keys()).filter(key => key!='code')
+  }
+
+  hideRows(rowIndexes){
+    rowIndexes.forEach(index => {
+      this.rows.get(index).hide()
+    })
+  }
+
+  showRows(rowIndexes){
+    rowIndexes.forEach(index => {
+      this.rows.get(index).show()
+    })
+  }
+
+  createCode(){
+    this.hideRows(this.playableRows)    
   }
 }
 
-let board = new Board
-board.appendTo(document.body)
-board.hide()
+// let board = new Board
+// board.appendTo(document.body)
 
-console.log(board.rows.get(0).export())
+// console.log(board.rows.get(0).export())
 
 //   console.log('creating board')
 //   let board = document.createElement("div")

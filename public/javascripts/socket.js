@@ -13,7 +13,7 @@ function openSocket(){
   send()
 }
 
-const acceptedMsgTypes = [ 'game', 'board', 'info' ]
+const acceptedMsgTypes = [ 'game', 'board', 'info', 'assignRole' ]
 function handleMsg(msg){
   let data = JSON.parse(msg.data || "")
   console.log(`>> NEW MSG ==> ${JSON.stringify(data)}`)

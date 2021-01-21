@@ -1,25 +1,3 @@
-// const wsurl = "ws://localhost:3000"
-// const socket = new WebSocket(wsurl)
-//
-// socket.onopen = openSocket
-// socket.onmessage = handleMsg
-//
-// function send(data='hi'){
-//   console.log(">> SENDING", data)
-//   socket.send(JSON.stringify(data))
-// }
-//
-// function openSocket(){
-//   send()
-// }
-//
-// function handleMsg(data){
-//   data = JSON.parse(data)
-//
-//   if (data['active']) updateActivePlayers(data['active'])
-// }
-
-
 const states = {
   idle: '',
   matchmake: 'Looking for match',
@@ -35,13 +13,17 @@ function matchmake(){
   send('matchmake')
 }
 
+let gamer = {
+
+}
+
 const handlers = {
-  game: function(msg){
+  
+  game: msg => {
       console.log(msg)
 
       if (msg === 'Gamers get ready'){
         state = states.startingGame
-        return uiStartGame()
       }
 
       if (msg === 'yeeted game'){
@@ -55,7 +37,12 @@ const handlers = {
 
   },
 
-  board: function(msg){
+  assignRole: role => {
+    gamer.role = role.toLowerCase()
+    return uiStartGame()
+  },
+
+  board: msg => {
     if (msg === 'enter code'){
         return getNewCode().then(code => {
           send({code: code})

@@ -22,9 +22,13 @@ function editPlayArea(html){
   _e(map.playArea).html(html)
 }
 
+let board
+
 function uiStartGame(){
   console.log('get ready boyyyyyzzzz')
   editPlayArea('GET READY')
+
+  board = new Board
   board.show()
 }
 
@@ -41,11 +45,12 @@ _e(map.play).onclick = function(){
 function getNewCode(){
   _e(map.codeArea).classList.remove("hidden")
   return new Promise(resolve => {
-      window.addEventListener('keypress', e => {
-        if (e.key === 'Enter'){
-          _e(map.codeArea).classList.add("hidden")
-          resolve(_e(map.codeText).value) 
-        }
-      })
+    board.createCode()
+      // window.addEventListener('keypress', e => {
+      //   if (e.key === 'Enter'){
+      //     _e(map.codeArea).classList.add("hidden")
+      //     resolve(_e(map.codeText).value) 
+      //   }
+      // })
   })
 }
