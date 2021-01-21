@@ -12,7 +12,7 @@ class ObjectifiedElement {
   }
 
   prependTo(loc){
-    if (!(loc instanceof Node)) console.error("error appending", this)
+    if (!(loc instanceof Node)) console.error("error prepending", this)
     loc.prepend(this.element)
   }
 
@@ -142,6 +142,10 @@ class Row extends ObjectifiedElementWithMap {
     this.active = true
     this.createSubmitButton()
   }
+
+  setTo(pins){
+    console.log("settings", this, "to", pins)
+  }
 }
 
 // TODO make this a class
@@ -151,15 +155,21 @@ class Board extends ObjectifiedElementWithMap {
     // creates this.addRow, this.rows, this.export
 
     for (let i=0; i<rows; i+=1){
-      this.prependRow(new Row)
+      let row = new Row
+      this.prependRow(row)
+      row.evaluation = new Row('eval-row')
     }
 
+    this.turn = 0
     this.prependRow(new Row('code-row'), 'code')
 
     // append self to document body
     this.appendTo(document.body)
   }
 
+  get currentRow(){
+    return this.rows.get(this.turn)
+  }
   get playableRows(){
     return Array.from(this.rows.keys()).filter(key => key!='code')
   }
@@ -180,6 +190,21 @@ class Board extends ObjectifiedElementWithMap {
     this.hideRows(this.playableRows)
     console.log(this.rows)
     this.rows.get('code').activate()
+  }
+
+  newTurn(){
+    if (gamer.role != 'mind'){
+      console.log('new game for the mind')
+      return
+    }
+
+    this.currentRow.activate()
+    this.turn += 1
+  }
+
+  setPins(evaluation, at){
+    this.currentRow.setTo(at)
+    this.currentRow.evaluation.setTo(evaluation)
   }
 }
 

@@ -48,6 +48,17 @@ const handlers = {
           send({code: code})
         })
     }
+
+    if (msg === 'code has been set'){
+      console.log('we have a game ladies')
+      board.showRows(board.playableRows)
+      board.newTurn()
+    }
+
+    if (msg['attempt'] && msg['eval']){
+      board.setPins(msg['eval'], msg['attempt'])
+      board.newTurn()
+    }
   },
 
   info: function(msg){

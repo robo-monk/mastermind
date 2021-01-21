@@ -1,4 +1,4 @@
-var util = require("./util")
+var util = require("./helpers/util")
 
 function sendJAndPromise(socket, msg, accepted){
     console.log('sending')
@@ -26,19 +26,44 @@ class Board {
     this.sendToCoder('enter code', 'code').then(code =>{
       this.code = code
       console.log(`setted up this code ${code}!`)
+
+      this.send2Gamers('code has been set', 'code').then(code => {
+        this.newAttempt(code)
+      })
     })
   }
 
   sendToCoder(){ return this.sendTo('coder', ...arguments)}
   sendToMind(){ return this.sendTo('mind', ...arguments)}
+
+  send2Gamers(msg){ 
+    return new Promise(resolve => {
+      this.sendToCoder(msg)
+      this.sendToMind(msg).then(code => resolve(code))
+    })
+  }
+
   sendTo(recipient, msg, expected){
     return sendJAndPromise(this.game[recipient], { board: msg }, expected)
   }
 
-  evalAttempt(attempt){
-    util.evalAttempt(this.code, attempt)
+  end(winner){
+    console.log('mind has won the game')
   }
+
+  evalAttempt(attempt){
+    return util.evalAttempt(this.code, attempt)
+  }
+  
   newAttempt(code){
+    console.log('new attempt with', code)
+    let ev = this.evalAttempt(code)
+    let _win = ev.red == 4
+    if (_win) { return this.end('mind') }
+    console.log('nice attempt, sending back response...', ev)
+    this.send2Gamers({ attempt: code, eval: ev }).then(code => {
+      this.newAttempt(code)
+    })
   }
 }
 
