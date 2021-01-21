@@ -25,6 +25,7 @@ function editPlayArea(html){
 function uiStartGame(){
   console.log('get ready boyyyyyzzzz')
   editPlayArea('GET READY')
+  board.show()
 }
 
 function updateInfo(msg){

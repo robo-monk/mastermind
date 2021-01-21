@@ -9,6 +9,18 @@ class ObjectifiedElement {
 
     loc.appendChild(this.element)
   }
+
+  prependTo(loc){
+    if (!(loc instanceof Node)) console.error("error appending", this)
+    loc.prepend(this.element)
+  }
+
+  hide(){
+    this.element.classList.add("hidden")
+  }
+  show(){
+    this.element.classList.remove('hidden')
+  }
 }
 
 const colors = [
@@ -55,9 +67,14 @@ class ObjectifiedElementWithMap extends ObjectifiedElement{
   let map = `${mapName}s`
   this[map] = new Map()
 
-  this[`add${capitalize(mapName)}`] = function(e){
-    this[map].set(this[map].size, e)
+  this[`add${capitalize(mapName)}`] = function(e, key){
+    this[map].set(key || this[map].size, e)
     e.appendTo(this.element)
+  }
+
+  this[`prepend${capitalize(mapName)}`] = function(e, key){
+    this[map].set(key || this[map].size, e)
+    e.prependTo(this.element)
   }
 
   this.export = function(){
@@ -70,52 +87,38 @@ class ObjectifiedElementWithMap extends ObjectifiedElement{
  }
 }
 
-// // TODO make this another class
-class Row extends ObjectifiedElementWithMap{
-  constructor(pins=4, className='row'){
+class Row extends ObjectifiedElementWithMap {
+  constructor(className='row', pins=4 ){
     super('pin', className)
-    // this.pins = new Map()
+    this.element.classList.add('row')
+    // creates this.addPin, this.pins, this.export
 
     for (let i=0; i<pins; i+=1){
       this.addPin(new Pin)
     }
   }
-
-  // addPin(pin){
-  //   this.pins.set(this.pins.size, pin)
-  //   pin.appendTo(this.element)
-  // }
-
-  // export(as='json'){
-  //   let exp = {}
-  //   for (let [index, pin] of this.pins){
-  //     console.log(pin)
-  //     console.log(pin.color)
-  //   }
-  // }
 }
 
 // TODO make this a class
 class Board extends ObjectifiedElementWithMap {
   constructor(rows=10, className='board'){
     super('row', className)
-    console.log('creating new board')
+    // creates this.addRow, this.rows, this.export
 
-    // this.rows = new Map()
     for (let i=0; i<rows; i+=1){
-      // board.appendChild(new Row())
-      this.addRow(new Row)
+      this.prependRow(new Row)
     }
-  }
 
+    this.prependRow(new Row('code-row'), 'code')
+  }
 }
 
 let board = new Board
 board.appendTo(document.body)
+board.hide()
 
-console.log(board.export())
+console.log(board.rows.get(0).export())
 
-// function createBoard(className='board', rows=10){
 //   console.log('creating board')
 //   let board = document.createElement("div")
 //   board.classList.add(className)
