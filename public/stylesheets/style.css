@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+button {
+  padding: 5px 15px;
+}
+
+.inactive {
+  cursor: not-allowed;
+  opacity: .5;
+}

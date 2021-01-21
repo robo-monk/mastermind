@@ -18,3 +18,31 @@
 //
 //   if (data['active']) updateActivePlayers(data['active'])
 // }
+
+
+const states = {
+  idle: '',
+  matchmake: 'Looking for match',
+  startingGame: 'Starting Game'
+}
+
+let state = states.idle
+
+function matchmake(){
+  if (state === states.matchmake) return 'already looking for match'
+  state = states.matchmake
+
+  send('matchmake')
+}
+
+function handleGameMsg(msg){
+    console.log(msg)
+    if (msg === 'Gamers get ready'){
+      state = states.startingGame
+      uiStartGame()
+    }
+}
+
+function handleInfoMsg(msg){
+  updateInfo(msg)
+}

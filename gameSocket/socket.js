@@ -1,7 +1,7 @@
 var websocket = require('ws')
 var util = require("./helpers/util")
+var game = require("./game")
 var wss;
-
 
 class Connections {
     constructor(){
@@ -61,6 +61,8 @@ function disconnect(){
 function handleMsg(msg){
   msg = JSON.parse(msg)
   console.log(`[INCOMING] from ${ this.id } => ${JSON.stringify(msg)}`);
+
+  if (msg === 'matchmake') game.newMatchmaker(this)
 }
 
 function create(server){
@@ -68,12 +70,6 @@ function create(server){
 
   wss = new websocket.Server({ server });
   wss.on("connection", function (ws) {
-      // setTimeout(function () {
-      //     console.log("Connection state: " + ws.readyState);
-      //     ws.send("Thanks for the message. --Your server.");
-      //     ws.close();
-      //     console.log("Connection state: " + ws.readyState);
-      // }, 2000);
 
       ws.id = util.uniqID(10)
       ws.sendJ = function(j) { this.send(JSON.stringify(j || 'hi')) }

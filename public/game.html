@@ -6,9 +6,20 @@
   </head>
   <body>
     <h1 id="title"> Looking to play MASTERMIND 🧠 </h1>
-    <p id='description'>
+    <span id='active-players'>
       Players 0/2
-    </p>
+    </span>
+
+    <div id='new-game'>
+      <p id='available-players'>
+        Players 0/2
+      </p>
+
+      <button type="button" id="play"> Play </button>
+    </div>
+
+
+    <div id='info'></div>
     <div id='board'></div>
     <script src="javascripts/socket.js" charset="utf-8"></script>
     <script src="javascripts/game.js" charset="utf-8"></script>

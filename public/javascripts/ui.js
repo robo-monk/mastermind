@@ -1,5 +1,9 @@
 const map = {
-    active: "#description"
+    active: "#active-players",
+    available: "#available-players",
+    play: '#play',
+    playArea: '#new-game',
+    info: "#info"
 }
 
 function _e(query){
@@ -10,4 +14,18 @@ function _e(query){
 
 function updateActivePlayers(n){
     _e(map.active).html(`${n} player${ n==1 ? ' is' : 's are'} online`)
+}
+
+function uiStartGame(){
+  console.log('get ready boyyyyyzzzz')
+  _e(map.playArea).html("GET READY!")
+}
+
+function updateInfo(msg){
+  _e(map.info).html(msg)
+}
+
+_e(map.play).onclick = function(){
+  matchmake()
+  this.html('Looking for match')
 }
