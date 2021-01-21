@@ -4,8 +4,6 @@ const map = {
     play: '#play',
     playArea: '#new-game',
     info: "#info",
-    codeArea: "#code-area",
-    codeText: "#code-text"
 }
 
 function _e(query){
@@ -43,7 +41,6 @@ _e(map.play).onclick = function(){
 
 
 function getNewCode(){
-  _e(map.codeArea).classList.remove("hidden")
   return new Promise(resolve => {
     board.createCode()
       // window.addEventListener('keypress', e => {

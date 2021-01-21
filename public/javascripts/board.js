@@ -1,6 +1,6 @@
 class ObjectifiedElement {
   constructor(className, parent, tag='div'){
-    this.element = document.createElement('div')
+    this.element = document.createElement(tag)
     this.parent = parent
     if (className) this.element.classList.add(className)
   }
@@ -16,12 +16,26 @@ class ObjectifiedElement {
     loc.prepend(this.element)
   }
 
+  destroy(){
+    this.element.remove()    
+  }
+
   hide(){
     this.element.classList.add("hidden")
   }
+
   show(){
     this.element.classList.remove('hidden')
   }
+
+  html(html){
+    this.element.innerHTML = html
+  }
+
+  onClick(cb){
+    this.element.addEventListener("click", cb.bind(this))
+  }
+
 }
 
 const colors = [
@@ -34,9 +48,9 @@ const colors = [
   ]
 
 class Pin extends ObjectifiedElement {
-  constructor(parent, clickable=true, className='pin'){
+  constructor(parent, className='pin'){
     super(className, parent)
-    if (clickable) this.element.addEventListener('click', _ => this.click() )
+    this.element.addEventListener('click', _ => this.click() )
     this.color = 0
   }
 
@@ -94,7 +108,7 @@ class ObjectifiedElementWithMap extends ObjectifiedElement{
 }
 
 class Row extends ObjectifiedElementWithMap {
-  constructor(className='row', edible=true, pins=4 ){
+  constructor(className='row', pins=4){
     super('pin', className)
     this.element.classList.add('row')
     // creates this.addPin, this.pins, this.export
@@ -103,12 +117,30 @@ class Row extends ObjectifiedElementWithMap {
       this.addPin(new Pin(this))
     }
   }
+
+  submit(){
+    send({ 
+      code: this.export()
+    })
+    this.inactivate()
+  }
   
+  createSubmitButton(){
+    if (this.submitButton) this.submitButton.destroy()
+    this.submitButton = new ObjectifiedElement('submit-button', this,'button')
+    this.submitButton.appendTo(document.body)
+    this.submitButton.html('submit')
+    this.submitButton.onClick(_ => { this.submit() })
+  }
+
   inactivate(){
+    this.submitButton.destroy()
     this.active = false
   }
+
   activate(){
     this.active = true
+    this.createSubmitButton()
   }
 }
 
@@ -124,6 +156,7 @@ class Board extends ObjectifiedElementWithMap {
 
     this.prependRow(new Row('code-row'), 'code')
 
+    // append self to document body
     this.appendTo(document.body)
   }
 
@@ -144,7 +177,9 @@ class Board extends ObjectifiedElementWithMap {
   }
 
   createCode(){
-    this.hideRows(this.playableRows)    
+    this.hideRows(this.playableRows)
+    console.log(this.rows)
+    this.rows.get('code').activate()
   }
 }
 
