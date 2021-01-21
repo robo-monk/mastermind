@@ -1,10 +1,40 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #202020;
+  color: whitesmoke;
+}
+
+#title{
+  font-size: 400%;
+}
+
+#menu{
+  font-size: xx-large;
+  margin-top: 80px;
+}
+
+.button{
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.button:hover{
+  color: #EF6F6C;
+}
+
+.automargin{
+  margin: auto;
+  width: fit-content;
+}
+
+.red{
+  color:#EF6F6C;
 }
 
 a {
   color: #00B7FF;
+  text-decoration: none;
 }
 
 button {
@@ -18,4 +48,8 @@ button {
 
 .hidden {
   display: none;
+}
+
+.center {
+  text-align: center;
 }

@@ -1,0 +1,24 @@
+
+.board{
+  background-color: #4F4F4F;
+  display: grid;
+  grid-row-gap: 20px;
+  width: fit-content;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.row {
+  display: grid;
+  width: fit-content;
+  grid-template-columns: repeat(4, 1fr);
+	grid-column-gap: 10px;
+}
+
+.pin{
+  height: 45px;
+  width: 45px;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: whitesmoke;
+}
