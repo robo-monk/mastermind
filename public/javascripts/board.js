@@ -41,49 +41,79 @@ class Pin extends ObjectifiedElement {
   click(){
     this.color+=1
   }
+
+  export(){
+    return this.color
+  }
 }
 
-class Row extends ObjectifiedElement{
+const capitalize = s => s[0].toUpperCase() + s.slice(1)
+// TODO make this another class
+class ObjectifiedElementWithMap extends ObjectifiedElement{
+ constructor(mapName, className){
+  super(className)
+  let map = `${mapName}s`
+  this[map] = new Map()
+
+  this[`add${capitalize(mapName)}`] = function(e){
+    this[map].set(this[map].size, e)
+    e.appendTo(this.element)
+  }
+
+  this.export = function(){
+    let exp = {}
+    for (let [key, value] of this[map]){
+      exp[key] = typeof value.export === 'function' ? value.export() : value
+    }
+    return exp
+  }
+ }
+}
+
+// // TODO make this another class
+class Row extends ObjectifiedElementWithMap{
   constructor(pins=4, className='row'){
-    super(className)
-    this.pins = new Map()
+    super('pin', className)
+    // this.pins = new Map()
 
     for (let i=0; i<pins; i+=1){
       this.addPin(new Pin)
     }
   }
 
-  addPin(pin){
-    this.pins.set(this.pins.size, pin)
-    pin.appendTo(this.element)
-  }
+  // addPin(pin){
+  //   this.pins.set(this.pins.size, pin)
+  //   pin.appendTo(this.element)
+  // }
+
+  // export(as='json'){
+  //   let exp = {}
+  //   for (let [index, pin] of this.pins){
+  //     console.log(pin)
+  //     console.log(pin.color)
+  //   }
+  // }
 }
 
 // TODO make this a class
-class Board extends ObjectifiedElement {
+class Board extends ObjectifiedElementWithMap {
   constructor(rows=10, className='board'){
-    super(className)
+    super('row', className)
     console.log('creating new board')
 
-    this.rows = new Map()
+    // this.rows = new Map()
     for (let i=0; i<rows; i+=1){
       // board.appendChild(new Row())
       this.addRow(new Row)
     }
   }
 
-  addRow(row){
-    this.rows.set(this.rows.size, row)
-    row.appendTo(this.element)
-  }
 }
 
 let board = new Board
 board.appendTo(document.body)
 
-  // createRow(){
-  //   this.rows.set(this.rows.size, createRowElement())
-  // }
+console.log(board.export())
 
 // function createBoard(className='board', rows=10){
 //   console.log('creating board')
