@@ -16,9 +16,13 @@ function updateActivePlayers(n){
     _e(map.active).html(`${n} player${ n==1 ? ' is' : 's are'} online`)
 }
 
+function editPlayArea(html){
+  _e(map.playArea).html(html)
+}
+
 function uiStartGame(){
   console.log('get ready boyyyyyzzzz')
-  _e(map.playArea).html("GET READY!")
+  editPlayArea('GET READY')
 }
 
 function updateInfo(msg){

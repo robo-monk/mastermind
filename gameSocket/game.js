@@ -41,13 +41,12 @@ class Game {
 
     this.mind.sendJ({info:"You've been assigned to be the mind"})
     this.coder.sendJ({info:"You're the coder"})
-    console.log('THIS MIND', this.mind)
-    console.log('THIS coder', this.coder)
   }
 
   close(){
     this.closed = true
     console.log('CLOSING GAME')
+    this.send2Gamers("yeeted game")
   }
 
   addGamer(gamer){

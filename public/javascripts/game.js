@@ -41,6 +41,13 @@ function handleGameMsg(msg){
       state = states.startingGame
       uiStartGame()
     }
+    if (msg === 'yeeted game'){
+
+      editPlayArea("<h1> Terribly sorry! It seems your opponent has been disconnected. </h1>")
+      setTimeout(_ => {
+        location.reload()
+      }, 1800)
+    }
 }
 
 function handleInfoMsg(msg){
