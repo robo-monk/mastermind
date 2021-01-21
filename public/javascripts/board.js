@@ -144,7 +144,7 @@ class Row extends ObjectifiedElementWithMap {
   }
 
   setTo(pins){
-    console.log("settings", this, "to", pins)
+    console.log(pins)
   }
 }
 
@@ -194,7 +194,7 @@ class Board extends ObjectifiedElementWithMap {
 
   newTurn(){
     if (gamer.role != 'mind'){
-      console.log('new game for the mind')
+      console.log('new turn for the mind')
       return
     }
 

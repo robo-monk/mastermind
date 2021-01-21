@@ -36,10 +36,10 @@ class Board {
   sendToCoder(){ return this.sendTo('coder', ...arguments)}
   sendToMind(){ return this.sendTo('mind', ...arguments)}
 
-  send2Gamers(msg){ 
+  send2Gamers(msg, accpetedType){ 
     return new Promise(resolve => {
       this.sendToCoder(msg)
-      this.sendToMind(msg).then(code => resolve(code))
+      this.sendToMind(msg, accpetedType).then(code => resolve(code))
     })
   }
 
@@ -52,6 +52,7 @@ class Board {
   }
 
   evalAttempt(attempt){
+    console.log('> evaluating')
     return util.evalAttempt(this.code, attempt)
   }
   
@@ -61,7 +62,7 @@ class Board {
     let _win = ev.red == 4
     if (_win) { return this.end('mind') }
     console.log('nice attempt, sending back response...', ev)
-    this.send2Gamers({ attempt: code, eval: ev }).then(code => {
+    this.send2Gamers({ attempt: code, eval: ev }, 'code').then(code => {
       this.newAttempt(code)
     })
   }
