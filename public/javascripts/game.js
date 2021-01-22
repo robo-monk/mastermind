@@ -9,9 +9,11 @@ let state = states.idle
 function matchmake(){
   if (state === states.matchmake) return 'already looking for match'
   state = states.matchmake
+  editInfo("Looking for a game...")
 
   send('matchmake')
 }
+setTimeout( matchmake, 500)
 
 let gamer = {}
 
@@ -25,14 +27,12 @@ const handlers = {
       }
 
       if (msg === 'yeeted game'){
-        editPlayArea("<h1> Terribly sorry! It seems your opponent has been disconnected. </h1>")
+        editInfo("<h1> Terribly sorry! It seems your opponent has been disconnected. </h1>")
         setTimeout(_ => {
-          location.reload()
+          window.location = '/'
         }, 1800)
         return
       }
-
-
   },
 
   assignRole: role => {
@@ -48,6 +48,7 @@ const handlers = {
     }
 
     if (msg === 'code has been set'){
+      editInfo(`The code has been set! ${gamer.role == 'mind' ? 'Good Luck!' : 'Will your big brained opponent break your code?' }`)
       console.log('we have a game ladies')
       board.showRows(board.playableRows)
       if (gamer.role == 'mind') board.newTurn()
@@ -60,6 +61,6 @@ const handlers = {
   },
 
   info: function(msg){
-    updateInfo(msg)
+    editInfo(msg)
   }
 }

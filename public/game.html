@@ -2,26 +2,31 @@
 <html>
   <head>
     <title> playing mastermind 🧠</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;703&family=Righteous&display=swap" rel="stylesheet">
+
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/game.css' />
     <link rel='stylesheet' href='/stylesheets/board.css' />
   </head>
   <body>
-    <h1 id="title"> Looking to play MASTERMIND 🧠 </h1>
-    <span id='active-players'>
-      Players 0/2
-    </span>
+    <!-- <h1 id="title" class="automargin"> Looking to play MASTERMIND 🧠 </h1> -->
+    <div class='game-menu'>
+      <h3 class="small logo">MASTER<span class="red">MIND</span></h3>
+      <span id='active-players'>
+      </span>
 
-    <div id='new-game'>
-      <p id='available-players'>
-        Players 0/2
-      </p>
+      <div id='info'></div>
 
-      <button type="button" id="play"> Play </button>
+      <!-- <img id='trippy' src="https://i1.wp.com/boingboing.net/wp-content/uploads/2015/10/oqnfwbC2.gif?w=970" alt=""> -->
+    </div>
+
+    <div id='play-area' class='automargin'>
+      <!-- <div id="play" class='button moveleft'> Start a new Game </div> -->
     </div>
 
 
-    <div id='info'></div>
 
     <script src="javascripts/socket.js" charset="utf-8"></script>
     <script src="javascripts/game.js" charset="utf-8"></script>

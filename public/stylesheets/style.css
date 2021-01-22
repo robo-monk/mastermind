@@ -1,25 +1,30 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1em "Raleway", Helvetica, Arial, sans-serif;
   background-color: #202020;
   color: whitesmoke;
 }
 
+.logo {
+  font-family: 'Righteous';
+}
 #title{
-  font-size: 400%;
+  padding: 50px;
+  font-size: 10vw;
+  font-family: 'Righteous';
 }
 
 #menu{
-  font-size: xx-large;
+  font-size: 4vw;
   margin-top: 80px;
 }
 
-.button{
+button, .button{
+  cursor: pointer;
   padding: 10px;
   border-radius: 6px;
 }
 
-.button:hover{
+button:hover, .button:hover{
   color: #EF6F6C;
 }
 
@@ -33,7 +38,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: whitesmoke;
   text-decoration: none;
 }
 
@@ -52,4 +57,7 @@ button {
 
 .center {
   text-align: center;
+}
+.moveleft{
+  margin-left: 5px;
 }

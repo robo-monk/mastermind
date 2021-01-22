@@ -19,36 +19,24 @@ function indexesOf(ary, val, indexes=[]){
 const objValues = obj => Array.from(new Map(Object.entries(obj)).values())
 
 function evalAttempt(og, at){
-  ogValues = objValues(og)
+  ogValues = objValues(og) // this just converts to [0,1,2,3]
   atValues = objValues(at)
 
   let red = 0
-  let found = []
-  let kindaFound = []
   let white = 0
 
-  ogValues.forEach((val, index) => {
-    // TODO FIX BUG 
-    let indexes = indexesOf(atValues, val) 
-
-    // console.log(val)
-    // console.log(val, atValues, "-> ", indexes, index, indexes.includes(index))
-    // console.log('current index', index, indexes.includes(index))
-
-    if (indexes.length<1) return
-
-    // console.log(atValues[index], val)
-    // the correct Value is included somewhere in the atValues
-    if (atValues[index] == val){
-      // the current index points at the same value we're at !
-      if (kindaFound.includes(index)) white-=1
+  atValues.forEach((val, index) => {
+    if (ogValues[index] == val){
       red += 1
-      found.push(index)
-    } else {
-      // if (found.includes(index)) return
-      white += 1
-      kindaFound.push(index)
+      ogValues[index] = null // yeet
     }
+  })
+
+  atValues.forEach((val, index) => {
+    let i = ogValues.indexOf(val)
+    if (i == -1 ) return
+    white += 1
+    ogValues[i] = null
   })
 
   return {

@@ -1,0 +1,25 @@
+#active-players {
+  margin: 10px 0px;
+  color: gray;
+}
+
+#info{
+  margin: 10px 0px;
+  font-size: 1.2em;
+}
+
+#trippy{
+  margin: auto;
+  width: fit-content;
+  mix-blend-mode: lighten;
+}
+
+.small {
+  font-size: 2em !important;
+}
+
+.game-menu {
+  width: 20vw;
+  margin: 50px;
+  float: left;
+}

@@ -5,6 +5,10 @@ class ObjectifiedElement {
     if (className) this.element.classList.add(className)
   }
 
+  get rect(){
+    return this.element.getBoundingClientRect()
+  }
+
   appendTo(loc=document.body){
     if (!(loc instanceof Node)) console.error("error appending", this)
 
@@ -32,12 +36,25 @@ class ObjectifiedElement {
     this.element.innerHTML = html
   }
 
+  offset(set){
+    if (!set) return {
+      top: this.rect.top + window.scrollY,
+      left: this.rect.left + window.scrollX
+    }
+
+    // set offset to
+    console.log('settings offset to' , set)
+    if (set.top) this.element.style.top = `${set.top}px`
+    if (set.left) this.element.style.left = `${set.left}px`
+  }
+
   onClick(cb){
     this.element.addEventListener("click", cb.bind(this))
   }
 
 }
 
+const defColor = "#404040"
 const colors = [
     '#7FDBFF',
     '#FF4136',
@@ -51,7 +68,7 @@ class Pin extends ObjectifiedElement {
   constructor(parent, className='pin'){
     super(className, parent)
     this.element.addEventListener('click', _ => this.click() )
-    this.color = 0
+    this.color = -1
   }
 
   get active(){
@@ -67,6 +84,7 @@ class Pin extends ObjectifiedElement {
   get color() { return this._color }
 
   get colorCode(){
+    if (this.color == -1) return defColor
     return colors[this.color]
   }
 
@@ -127,7 +145,7 @@ class Row extends ObjectifiedElementWithMap {
   createSubmitButton(){
     if (this.submitButton) this.submitButton.destroy()
     this.submitButton = new ObjectifiedElement('submit-button', this,'button')
-    this.submitButton.appendTo(document.body)
+    this.submitButton.appendTo(_e(map.playArea))
     this.submitButton.html('submit')
     this.submitButton.onClick(_ => { this.submit() })
   }
@@ -144,8 +162,6 @@ class Row extends ObjectifiedElementWithMap {
 
   setTo(pins){
     for (let [key, pin] of this.pins){
-      console.log(key, pin)
-      console.log(pins)
       pin.color = pins[key]
     }
   }
@@ -163,18 +179,39 @@ class Board extends ObjectifiedElementWithMap {
       row.evaluation.appendTo(row.element)
     }
 
-    this.turn = 0
     
     let codeRow = new Row('code-row')
     codeRow.element.classList.add('row')
     this.prependRow(codeRow, 'code')
 
+    this.arrow = new ObjectifiedElement('arrow', this, 'div')
+    this.arrow.appendTo(_e(map.playArea))
+
     // append self to document body
-    this.appendTo(document.body)
+    this.appendTo(_e(map.playArea))
+
+    this.turn = 0
+  }
+
+  set turn(n){
+    this._turn = n
+
+    if (this.previousRow) this.arrow.offset({ 
+      top: this.previousRow.offset().top + this.previousRow.rect.height/2,
+      left: this.offset().left - this.arrow.rect.width*2.5
+    })
+  }
+
+  get turn() {
+    return this._turn
   }
 
   get currentRow(){
     return this.rows.get(this.turn)
+  }
+
+  get previousRow(){
+    return this.rows.get(this.turn-1)
   }
   get playableRows(){
     return Array.from(this.rows.keys()).filter(key => key!='code')
@@ -209,8 +246,13 @@ class Board extends ObjectifiedElementWithMap {
   }
 
   setPins(evaluation, at){
-    this.currentRow.setTo(at)
-    this.currentRow.evaluation.setTo(parseEv(evaluation))
+    let ev = parseEv(evaluation)
+    if (gamer.role == 'coder'){
+      this.currentRow.setTo(at)
+      this.currentRow.evaluation.setTo(ev)
+    }else{
+      this.previousRow.evaluation.setTo(ev)
+    }
   }
 }
 
@@ -231,10 +273,6 @@ function parseEv(ev){
   return obj
 }
 
-// let board = new Board
-// board.appendTo(document.body)
-
-// console.log(board.rows.get(0).export())
 
 //   console.log('creating board')
 //   let board = document.createElement("div")

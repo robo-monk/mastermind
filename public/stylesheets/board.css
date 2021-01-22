@@ -1,11 +1,15 @@
 
 .board{
-  background-color: #4F4F4F;
+  background-color: #282828;
   display: grid;
   grid-row-gap: 20px;
   width: fit-content;
   padding: 20px;
   border-radius: 10px;
+  margin-left: 6vw;
+  /* margin-top: 5vh;  */
+  /* float: right; */
+  /* margin: auto; */
 }
 
 .code-row {
@@ -43,4 +47,38 @@
   width: 15px;
   border-radius: 100px;
   background-color: whitesmoke;
+}
+
+
+.submit-button {
+  /* position: absolute; */
+  background-color: #EF6F6C;
+  /* left: 10vw; */
+  /* bottom: 12vh; */
+  font-family: 'Righteous';
+  font-size: 1.6em;
+  padding: 10px 20px;
+  border: none;
+  margin: auto;
+}
+
+.submit-button:hover{
+  background-color: rgb(237, 149, 148);
+  color: black;
+}
+
+#play-area {
+  margin-top: 7vh;
+  width: 50vw;
+
+}
+.arrow {
+  background-color: #EF6F6C;
+  position: absolute;
+
+  bottom: -100px;
+  width: 15px;
+  height: 15px;
+  border-radius: 100px;
+  transition: all 1s ease;
 }
