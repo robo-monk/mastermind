@@ -3,6 +3,10 @@
   color: gray;
 }
 
+#active-players::before{
+  content: "🧠 " 
+}
+
 #info{
   margin: 10px 0px;
   font-size: 1.2em;
@@ -23,3 +27,24 @@
   margin: 50px;
   float: left;
 }
+
+#game-info{
+  color: gray;
+  font: monospace;
+}
+
+#game-tries {
+  
+}
+
+#info::before{
+  content: "🎙 " 
+}
+#game-time::before{
+  content: "⏰ " 
+}
+
+#game-time::after{
+  content: " seconds passed" 
+}
+

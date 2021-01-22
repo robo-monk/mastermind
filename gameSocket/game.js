@@ -20,7 +20,6 @@ class Game {
     this.host = host
     this.gamers = []
     this.addGamer(host)
-
     this.closed = false
       // this.coder = coder
       // this.mind = mind
@@ -35,7 +34,7 @@ class Game {
 
   start(){
     console.log("STARTING GAME")
-    this.send2Gamers("Gamers get ready")
+    this.send2Gamers("start")
 
     let mindIndex = Math.round(Math.random())
     this.mind = this.gamers[mindIndex]
@@ -44,16 +43,21 @@ class Game {
     this.mind.sendJ({info:"You've been assigned to be the mind"})
     this.coder.sendJ({info:"You're the coder"})
 
-    this.coder.sendJ({assignRole:"coder"})
-    this.mind.sendJ({assignRole:"mind"})
+    this.coder.sendJ({game: {assignRole:"coder"}})
+    this.mind.sendJ({game: {assignRole:"mind"}})
 
     this.board = board.create(this)
+  }
+
+  end(winner){
+    this.send2Gamers({ winner: winner, secret: this.board.code })
+    this.winner = winner
   }
 
   close(){
     this.closed = true
     console.log('CLOSING GAME')
-    this.send2Gamers("yeeted game")
+    this.send2Gamers("yeet")
   }
 
   addGamer(gamer){

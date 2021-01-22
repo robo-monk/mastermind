@@ -22,22 +22,33 @@ const handlers = {
   game: msg => {
       console.log(msg)
 
-      if (msg === 'Gamers get ready'){
+      if (msg === 'start'){
+        time('off')
         state = states.startingGame
       }
 
-      if (msg === 'yeeted game'){
+      if (msg === 'yeet'){
+        time('off')
         editInfo("<h1> Terribly sorry! It seems your opponent has been disconnected. </h1>")
         setTimeout(_ => {
           window.location = '/'
         }, 1800)
         return
       }
-  },
 
-  assignRole: role => {
-    gamer.role = role.toLowerCase()
-    return uiStartGame()
+      if (msg['winner']){
+        time('off')
+        console.log(`${msg['winner']} won`)
+        UIwin(msg['winner'])
+        board.rows.get("code").setTo(msg['secret'])
+
+      }
+
+      if (msg['assignRole']){
+        console.log('assing roles')
+        gamer.role = msg['assignRole'].toLowerCase()
+        return uiStartGame()
+      }
   },
 
   board: msg => {
@@ -51,7 +62,10 @@ const handlers = {
       editInfo(`The code has been set! ${gamer.role == 'mind' ? 'Good Luck!' : 'Will your big brained opponent break your code?' }`)
       console.log('we have a game ladies')
       board.showRows(board.playableRows)
+      time('on')
+
       if (gamer.role == 'mind') board.newTurn()
+
     }
 
     if (msg['attempt'] && msg['eval']){

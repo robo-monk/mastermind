@@ -257,6 +257,7 @@ class Board extends ObjectifiedElementWithMap {
     }
 
     this.turn += 1
+    editGameInfo(this.turn)
   }
 
   setPins(evaluation, at){
