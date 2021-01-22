@@ -16,16 +16,10 @@ app.get('/', function(req, res) {
     mindWins: gameSocket.info().mindWins
   });
 })
-app.get('/', function(req, res, next) {
-  console.log('visited /root')
-  res.sendFile("splash.html", {root: "./public"})
-  // res.render('play', { title: 'BigBrain' });
-})
 
 app.get('/play', function(req, res, next) {
   console.log('visited /play')
   res.sendFile("game.html", {root: "./public"})
-  // res.render('play', { title: 'BigBrain' });
 })
 
 const server = http.createServer(app);
