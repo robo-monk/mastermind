@@ -85,4 +85,13 @@ function create(server){
 
 }
 
-module.exports = { create }
+function info(){
+  return{
+
+    active: cons.activeConnections,
+    mindWins: game.info().mindWins,
+    coderWins: game.info().coderWins
+  }
+}
+
+module.exports = { create, info }

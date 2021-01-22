@@ -9,6 +9,10 @@ class Games {
       return this.games.filter(g => g.open)
     }
 
+    getWinsOf(role){
+      return this.games.filter(g => g.winner === role).length
+    }
+
     create(host){
       this.games.push(new Game(host))
     }
@@ -90,6 +94,14 @@ function newMatchmaker(gamer){
 
 }
 
+function info(){
+  return {
+    mindWins: games.getWinsOf('mind'),
+    coderWins: games.getWinsOf('coder')
+  }
+}
+
 module.exports = {
-  newMatchmaker
+  newMatchmaker,
+  info
 }

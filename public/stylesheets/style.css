@@ -9,7 +9,7 @@ body {
 }
 #title{
   padding: 50px;
-  font-size: 10vw;
+  font-size: 8vw;
   font-family: 'Righteous';
 }
 
@@ -33,6 +33,21 @@ body {
 #rules p{
   text-align: left;
 }
+
+#stats {
+  margin-top: 80px;
+  opacity: .8;
+  transition: all .3s ease;
+}
+#stats:hover{
+  opacity: 1;
+}
+#stats span::after{
+  content: " | ";
+  padding: 10px;
+}
+
+#last-stat::after{ content: '' !important; }
 
 #menu{
   font-size: 4vw;

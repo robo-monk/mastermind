@@ -16,9 +16,15 @@
       <a href="/play" class='button'>Play</a>
     </div>
 
+    <div id='stats' class='automargin'>
+      <span> active players: <%= active %> </span>
+      <span> coder wins: <%= coderWins %> </span>
+      <span id='last-stat'> mind wins: <%= mindWins %> </span>
+    </div>
+
     <div id='rules' class='automargin'>
     <h3> Rules </h3>
-    <p > 
+    <p >
       The Mind: <br> Try to break the secret code! Your attempt is automatically evaluated. Each red pin means that you have
       a color correct and in the correct position of the code. Each white pin means that you have a color correct, but in the wrong position.
 

@@ -8,6 +8,14 @@ var app = express();
 app.use(express.static(__dirname + "/public"));
 
 // ROUTES
+app.set('view engine', 'ejs')
+app.get('/', function(req, res) {
+  res.render('splash.ejs', {
+    active: gameSocket.info().active,
+    coderWins: gameSocket.info().coderWins,
+    mindWins: gameSocket.info().mindWins
+  });
+})
 app.get('/', function(req, res, next) {
   console.log('visited /root')
   res.sendFile("splash.html", {root: "./public"})
