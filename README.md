@@ -18,3 +18,8 @@ $ npm start
 
 and visit http://localhost:3000
 
+To run tests with Jest
+
+```bash
+$ npm test
+```
