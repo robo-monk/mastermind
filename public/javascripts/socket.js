@@ -1,5 +1,5 @@
-const wsurl = "ws://localhost:3000"
-const socket = new WebSocket(wsurl)
+var HOST = location.origin.replace(/^http/, 'ws')
+const socket = new WebSocket(HOST)
 
 socket.onopen = openSocket
 socket.onmessage = handleMsg

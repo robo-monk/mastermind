@@ -2,7 +2,7 @@ var express = require("express");
 var http = require("http");
 var gameSocket = require("./gameSocket/socket.js")
 
-var port = process.argv[2] || 3000 ;
+var port = process.env.PORT || process.argv[2] || 3000 ;
 var app = express();
 
 app.use(express.static(__dirname + "/public"));
