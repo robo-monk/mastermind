@@ -6,7 +6,8 @@
   width: fit-content;
   padding: 20px;
   border-radius: 10px;
-  margin-left: 6vw;
+  margin: auto;
+  /* margin-left: 6vw; */
   /* margin-top: 5vh;  */
   /* float: right; */
   /* margin: auto; */
@@ -14,8 +15,11 @@
 
 .code-row {
   /* background-color: red; */
-  padding: 30px 0;
+  margin: auto;
+  padding: 30px 10px;
+  grid-template-columns: repeat(4, 1fr) !important;
 }
+
 .row {
   display: grid;
   width: fit-content;
@@ -51,15 +55,13 @@
 
 
 .submit-button {
-  /* position: absolute; */
   background-color: #EF6F6C;
-  /* left: 10vw; */
-  /* bottom: 12vh; */
   font-family: 'Righteous';
   font-size: 1.6em;
   padding: 10px 20px;
   border: none;
-  margin: auto;
+  margin-top: 20px;
+  /* margin: auto; */
 }
 
 .submit-button:hover{
@@ -71,7 +73,9 @@
   margin-top: 7vh;
   width: 50vw;
 
+  text-align: center;
 }
+
 .arrow {
   background-color: #EF6F6C;
   position: absolute;

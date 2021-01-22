@@ -79,6 +79,7 @@ class Pin extends ObjectifiedElement {
   set color(n){
     this._color = n%colors.length
     this.element.style.background = this.colorCode
+    if (this.parent && typeof this.parent.onChange === 'function') this.parent.onChange(this)
   }
 
   get color() { return this._color }
@@ -157,7 +158,17 @@ class Row extends ObjectifiedElementWithMap {
 
   activate(){
     this.active = true
-    this.createSubmitButton()
+    //this.createSubmitButton()
+  }
+
+  get isOkToSubmit(){
+    return this.active && Array.from(this.pins.values()).filter(p => p.color==-1).length === 0
+  }
+
+  onChange(){
+    if (this.isOkToSubmit){
+      this.createSubmitButton()
+    }
   }
 
   setTo(pins){
@@ -191,6 +202,7 @@ class Board extends ObjectifiedElementWithMap {
     this.appendTo(_e(map.playArea))
 
     this.turn = 0
+    this.sfx = new Audio("sounds/play.wav")
   }
 
   set turn(n){
@@ -200,6 +212,8 @@ class Board extends ObjectifiedElementWithMap {
       top: this.previousRow.offset().top + this.previousRow.rect.height/2,
       left: this.offset().left - this.arrow.rect.width*2.5
     })
+
+    if (this.sfx) this.sfx.play()
   }
 
   get turn() {
