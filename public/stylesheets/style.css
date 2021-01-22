@@ -13,6 +13,19 @@ body {
   font-family: 'Righteous';
 }
 
+#rules {
+  position: absolute;
+  font-size: 1em;
+  width: 30%;
+  text-align: center;
+  bottom: 5%;
+  left: 35%;
+  color: gray;
+}
+#rules p{
+  text-align: left;
+}
+
 #menu{
   font-size: 4vw;
   margin-top: 80px;
