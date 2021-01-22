@@ -13,8 +13,16 @@ body {
   font-family: 'Righteous';
 }
 
+#rules::before, #rules::after{
+ content: "-----------------";
+ color: gray;
+ opacity: .4;
+
+}
+
 #rules {
   position: absolute;
+  display: grid;
   font-size: 1em;
   width: 30%;
   text-align: center;
@@ -35,10 +43,15 @@ button, .button{
   cursor: pointer;
   padding: 10px;
   border-radius: 6px;
+  transition: all .5s ease;
 }
 
 button:hover, .button:hover{
   color: #EF6F6C;
+}
+
+button:active, .button:active {
+  border: 5px solid #EF6F6C;
 }
 
 .automargin{

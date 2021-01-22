@@ -12,6 +12,9 @@
   font-size: 1.2em;
 }
 
+
+
+
 #trippy{
   margin: auto;
   width: fit-content;
@@ -30,11 +33,16 @@
 
 #game-info{
   color: gray;
+  user-select: none;
   font: monospace;
 }
 
-#game-tries {
-  
+#game-info:hover{
+  color: whitesmoke;
+}
+
+#game-info:active{
+  background: #303030
 }
 
 #info::before{

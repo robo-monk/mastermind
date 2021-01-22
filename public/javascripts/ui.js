@@ -64,4 +64,11 @@ function getNewCode(){
 }
 
 
+// watch media
+function smallScreenAlert(evt){
+  console.log(evt)
+  alert('MASTERMIND is optimized for screen larger than your current configuration') 
+}
+window.matchMedia("(min-width: 9000px)").addListener(smallScreenAlert)
+window.matchMedia("(min-width: 900px)").addListener(smallScreenAlert)
 
