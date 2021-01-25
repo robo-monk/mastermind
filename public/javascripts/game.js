@@ -13,7 +13,6 @@ function matchmake(){
 
   send('matchmake')
 }
-setTimeout( matchmake, 500)
 
 let gamer = {}
 
